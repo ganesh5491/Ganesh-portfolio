@@ -1,0 +1,24 @@
+styles.css
+.parallax-section {
+  height: 70vh; /* Adjust height as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-attachment: fixed; /* Creates the parallax effect */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.white-bg {
+  background-color: white;
+  color: black; /* Text color for white background */
+}
+
+.black-bg {
+  background-color: black;
+  color: white; /* Text color for black background */
+}

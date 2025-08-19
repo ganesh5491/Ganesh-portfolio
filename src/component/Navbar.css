@@ -1,0 +1,41 @@
+.navbar {
+  background: black;
+  padding: 15px 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0 15px;
+}
+
+.nav-item a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.nav-item .active {
+  color: #010202;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.nav-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+#gk {
+  color: #ff00ff;
+}
