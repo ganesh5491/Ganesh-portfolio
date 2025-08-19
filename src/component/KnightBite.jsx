@@ -3,7 +3,7 @@ import React,{useState} from "react";
 import img1 from "../assets/kb_banner.jpg";
 import img2 from "../assets/video.mp4";
 import img3 from "../assets/kb1.png";
-import img4 from "../assets/kB2.png";
+import img4 from "../assets/KB2.png";
 import img6 from "../assets/kb4.png";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
