@@ -1,11 +1,359 @@
 import React from "react";
 import AOS from "aos";
 import { useEffect } from "react";
-// import img1 from "../assets/mind.avif";
 import img1 from "../assets/mind1.jpg";
 import Navbar from "./Navbar";
 import { useTheme, useMediaQuery } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import styled, { keyframes } from "styled-components";
+
+// Futuristic animations
+const float = keyframes`
+  0%, 100% { transform: translateY(0px) rotateX(0deg); }
+  50% { transform: translateY(-15px) rotateX(5deg); }
+`;
+
+const glow = keyframes`
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), 
+                0 0 40px rgba(0, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.4), 
+                0 0 60px rgba(255, 0, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+`;
+
+const shimmer = keyframes`
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+`;
+
+const pulse = keyframes`
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+`;
+
+const rotate = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+// Styled components
+const Container = styled.div`
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(0, 255, 127, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    animation: ${rotate} 20s linear infinite;
+  }
+`;
+
+const MainTitle = styled.h1`
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(45deg, #ffffff, #00ffff, #ff00ff, #ffffff);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ${shimmer} 4s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #00ffff, transparent);
+    border-radius: 2px;
+    animation: ${glow} 2s ease-in-out infinite;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+  }
+`;
+
+const ServiceCard = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  width: 280px;
+  height: 320px;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: ${float} 6s ease-in-out infinite;
+  cursor: pointer;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 20px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  &:hover {
+    transform: translateY(-20px) rotateX(10deg) rotateY(5deg) scale(1.05);
+    animation-play-state: paused;
+    box-shadow: 
+      0 30px 60px rgba(0, 255, 255, 0.3),
+      0 0 80px rgba(255, 0, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: rgba(0, 255, 255, 0.5);
+  }
+  
+  &:nth-child(2) {
+    animation-delay: -2s;
+  }
+  
+  &:nth-child(3) {
+    animation-delay: -4s;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    min-height: 280px;
+  }
+`;
+
+const ServiceIcon = styled.div`
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.2) rotateZ(10deg);
+    background: rgba(0, 255, 255, 0.2);
+    border-color: rgba(0, 255, 255, 0.6);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+  }
+`;
+
+const ServiceTitle = styled.h2`
+  color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  background: linear-gradient(45deg, #00ffff, #ff00ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  position: relative;
+  z-index: 1;
+  
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+`;
+
+const ServiceDescription = styled.p`
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+  
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const CTASection = styled.section`
+  display: flex;
+  flex-direction: ${props => props.isMobile ? 'column' : 'row'};
+  align-items: center;
+  gap: ${props => props.isMobile ? '2rem' : '3rem'};
+  padding: 3rem;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 4rem auto;
+  max-width: 1200px;
+  position: relative;
+  transition: all 0.4s ease;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+    border-radius: 25px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 255, 255, 0.2);
+    border-color: rgba(0, 255, 255, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    margin: 2rem 1rem;
+    padding: 2rem;
+  }
+`;
+
+const CTAContent = styled.div`
+  flex: 1;
+  text-align: ${props => props.isMobile ? 'center' : 'left'};
+  position: relative;
+  z-index: 1;
+`;
+
+const CTATitle = styled.h2`
+  font-size: ${props => props.isMobile ? '2rem' : '2.8rem'};
+  font-weight: 800;
+  background: linear-gradient(45deg, #ffffff, #00ffff, #ff00ff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ${shimmer} 3s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+`;
+
+const CTASubtitle = styled.h4`
+  color: rgba(255, 0, 255, 0.8);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: ${props => props.isMobile ? 'column' : 'row'};
+  gap: 1rem;
+  align-items: center;
+  margin-top: 2rem;
+`;
+
+const GlowButton = styled.button`
+  background: linear-gradient(45deg, rgba(0, 255, 255, 0.2), rgba(255, 0, 255, 0.2));
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  color: #ffffff;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  width: ${props => props.isMobile ? '200px' : 'auto'};
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 
+      0 15px 35px rgba(0, 255, 255, 0.4),
+      0 0 50px rgba(255, 0, 255, 0.3);
+    border-color: rgba(0, 255, 255, 0.6);
+    
+    &::before {
+      left: 100%;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(1.02);
+  }
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+  transition: all 0.4s ease;
+  
+  img {
+    width: ${props => props.isMobile ? '200px' : '300px'};
+    height: ${props => props.isMobile ? '200px' : '300px'};
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    animation: ${float} 4s ease-in-out infinite;
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
+    background: linear-gradient(45deg, #00ffff, #ff00ff, #00ff7f);
+    border-radius: 50%;
+    z-index: -1;
+    animation: ${glow} 3s ease-in-out infinite;
+  }
+  
+  &:hover {
+    transform: scale(1.1) rotateY(10deg);
+    
+    img {
+      border-color: rgba(0, 255, 255, 0.6);
+      animation-play-state: paused;
+    }
+  }
+`;
 
 const Services = () => {
   useEffect(() => {
@@ -13,290 +361,106 @@ const Services = () => {
   }, []);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); 
-  return (
-    <>
-      <Navbar />
-      <div
-        id="service"
-        style={{
-          textAlign: "center",
-          marginTop: "100px",
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-          marginBottom: "-20px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "35px",
-            color: "#333",
-            marginBottom: "60px",
-            fontFamily:
-              'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
-          }}
-        >
-          Services
-        </h1>
+  const services = [
+    {
+      icon: "📱",
+      title: "Mobile App Development",
+      description: "I design and build tailored mobile applications that meet specific business needs, ensuring both functionality and user satisfaction."
+    },
+    {
+      icon: "💻",
+      title: "Frontend Development",
+      description: "I create visually engaging, responsive interfaces that work seamlessly across devices, providing a smooth user experience."
+    },
+    {
+      icon: "🔧",
+      title: "Backend Development",
+      description: "Developing backend systems that are robust, secure, and scalable, tailored to handle growing business needs."
+    }
+  ];
+
+  return (
+    <Container>
+      <Navbar />
+      
+      <div style={{ 
+        paddingTop: '120px', 
+        paddingBottom: '80px',
+        position: 'relative',
+        zIndex: 1
+      }}>
+        <MainTitle>Services</MainTitle>
+        
         <div
           style={{
             display: "flex",
-            gap: "20px",
+            gap: "2rem",
             justifyContent: "center",
             flexWrap: "wrap",
+            marginBottom: "6rem",
+            padding: "0 2rem"
           }}
         >
-          {/* Service Card 1 */}
-          <div
-            data-aos="zoom-out"
-            style={{
-              backgroundColor: "white",
-              borderRadius: "10px",
-              padding: "20px",
-              width: "200px",
-              height: "250px",
-              boxShadow: "0px 0px 15px #347f9ff5",
-              transition: "transform 0.3s ease",
-              // transition: "transform 0.1s ease",
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.transform = "translateY(-5px)")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.transform = "translateY(0)")
-            }
-          >
-            <div style={{ fontSize: "40px", color: "#3051c7" }}>📱</div>
-            <h2
-              style={{
-                color: "#12569be1",
-                fontSize: "20px",
-                margin: "15px 0",
-                fontFamily:
-                  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                textShadow: "2px 2px 4px rgba(116, 29, 203, 0.3)",
-              }}
+          {services.map((service, index) => (
+            <ServiceCard
+              key={index}
+              data-aos="zoom-out"
+              data-aos-delay={index * 200}
             >
-              Mobile App Development
-            </h2>
-            <p style={{ color: "#333", fontSize: "14px", lineHeight: "1.6" }}>
-              I design and build tailored mobile applications that meet specific
-              business needs, ensuring both functionality and user satisfaction.
-            </p>
-          </div>
-
-          {/* Service Card 2 */}
-          <div
-            data-aos="zoom-out"
-            style={{
-              backgroundColor: "white",
-              borderRadius: "10px",
-              padding: "20px",
-              width: "200px",
-              height: "250px",
-              boxShadow: "0px 0px 15px #347f9ff5",
-              transition: "transform 0.3s ease",
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.transform = "translateY(-5px)")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.transform = "translateY(0)")
-            }
-          >
-            <div style={{ fontSize: "40px", color: "#3051c7" }}>💻</div>
-            <h2
-              style={{
-                color: "#12569be1",
-                fontSize: "20px",
-                margin: "15px 0",
-                fontFamily:
-                  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                textShadow: "2px 2px 4px rgba(116, 29, 203, 0.3)",
-              }}
-            >
-              Frontend Development
-            </h2>
-            <p style={{ color: "#333", fontSize: "14px", lineHeight: "1.6" }}>
-              I create visually engaging, responsive interfaces that work
-              seamlessly across devices, providing a smooth user experience.
-            </p>
-          </div>
-
-          {/* Service Card 3 */}
-          <div
-            data-aos="zoom-out"
-            style={{
-              backgroundColor: "white",
-              borderRadius: "10px",
-              padding: "20px",
-              width: "200px",
-              height: "250px",
-              boxShadow: "0px 0px 15px #347f9ff5",
-              transition: "transform 0.1s ease",
-            }}
-            onMouseOver={(e) =>
-              (e.currentTarget.style.transform = "translateY(-5px)")
-            }
-            onMouseOut={(e) =>
-              (e.currentTarget.style.transform = "translateY(0)")
-            }
-          >
-            <div style={{ fontSize: "40px", color: "#3051c7" }}>🔧</div>
-            <h2
-              style={{
-                color: "#12569be1",
-                fontSize: "20px",
-                margin: "15px 0",
-                fontFamily:
-                  'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                textShadow: "2px 2px 4px rgba(116, 29, 203, 0.3)",
-              }}
-            >
-              Backend Development
-            </h2>
-            <p style={{ color: "#333", fontSize: "14px", lineHeight: "1.6" }}>
-              Developing backend systems that are robust, secure, and scalable,
-              tailored to handle growing business needs.
-            </p>
-          </div>
+              <ServiceIcon>{service.icon}</ServiceIcon>
+              <ServiceTitle>{service.title}</ServiceTitle>
+              <ServiceDescription>{service.description}</ServiceDescription>
+            </ServiceCard>
+          ))}
         </div>
-        <div
-          style={{
-            marginTop: "50px",
-            margin: "0% ",
-            padding: "20px",
-          }}
-        >
-          {/* Get In Touch Section */}
-          <section
-            style={{
-              display: "flex",
-              flexDirection: isMobile ? "column" : "row", // Stack vertically on mobile, horizontally on desktop
-              alignItems: "center",
-              gap: isMobile ? "10px" : "20px", // Reduce gap on mobile
-              padding: isMobile ? "30px 20px" : "30px", // Adjust padding for mobile
-              borderRadius: "10px",
-              backgroundColor: "#ffffff",
-              boxShadow: "0px 0px 25px rgba(99, 27, 176, 0.84)", // Glow effect
-              margin: isMobile ? "30px 5%" : "50px 10%", // Adjust margin for mobile
-              marginTop: "100px",
-              height: "auto", // Allow height to adjust based on content
-            }}
-          >
-            <div
-              style={{
-                maxWidth: "500px",
-                textAlign: isMobile ? "center" : "left", // Center text on mobile, left-align on desktop
-              }}
-            >
-              <h4
-                style={{
-                  color: "#a24ca3",
-                  fontSize: isMobile ? "1rem" : "1.2rem", // Adjust font size for mobile
-                  marginBottom: "0px",
-                }}
-              >
-                Get In Touch
-              </h4>
-              <br />
-              <h2
-                style={{
-                  fontSize: isMobile ? "1.8rem" : "2.4rem", // Adjust font size for mobile
-                  marginBottom: "10px",
-                  width: isMobile ? "100%" : "450px", // Full width on mobile, fixed width on desktop
-                  fontFamily:
-                    'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                  textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
-                }}
-              >
-                LET'S CREATE <br /> SOMETHING AMAZING TOGETHER
-              </h2>
-              <br />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: isMobile ? "column" : "row", // Stack buttons vertically on mobile
-                  gap: "10px",
-                  alignItems: "center",
-                }}
-              >
-                <button
+
+        <CTASection isMobile={isMobile} data-aos="fade-up">
+          <CTAContent isMobile={isMobile}>
+            <CTASubtitle>Get In Touch</CTASubtitle>
+            <CTATitle isMobile={isMobile}>
+              LET'S CREATE<br />
+              SOMETHING AMAZING TOGETHER
+            </CTATitle>
+            
+            <ButtonContainer isMobile={isMobile}>
+              <GlowButton isMobile={isMobile}>
+                <NavLink
+                  to="/project"
                   style={{
-                    padding: "10px 10px",
-                    fontSize: "1rem",
-                    backgroundColor: "#a24ca3",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
                     color: "white",
-                    width: "170px", // Full width on mobile, fixed width on desktop
+                    textDecoration: "none",
+                    fontWeight: "bold",
                   }}
                 >
-                  <NavLink
-                    id="ab1"
-                    to="/project"
-                    style={{
-                      color: "white",
-                      textDecorationLine: "none",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    My Last Projects
-                  </NavLink>
-                </button>
-                <button
+                  My Last Projects
+                </NavLink>
+              </GlowButton>
+              <GlowButton isMobile={isMobile}>
+                <NavLink
+                  to="/contact"
                   style={{
-                    padding: "10px 10px",
-                    fontSize: "1rem",
-                    backgroundColor: "#a24ca3",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
                     color: "white",
-                    width: "130px",
-                    marginLeft: isMobile ? "0" : "10px", // Remove margin on mobile
+                    textDecoration: "none",
+                    fontWeight: "bold",
                   }}
                 >
-                  <NavLink
-                    id="ab1"
-                    to="/contact"
-                    style={{
-                      color: "white",
-                      textDecorationLine: "none",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Contact Me
-                  </NavLink>
-                </button>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: isMobile ? "20px" : "0", // Add space between text and image on mobile
-              }}
-            >
-              <img
-                src={img1}
-                alt="Person Pointing"
-                style={{
-                  width: isMobile ? "80%" : "300px", // Adjust image size for mobile
-                  height: "auto",
-                  borderRadius: "50%",
-                  marginLeft: isMobile ? "0" : "50px", // Remove margin on mobile
-                  boxShadow: "0px 0px 50px rgb(116, 26, 146)", // Add shadow
-                }}
-              />
-            </div>
-          </section>
-        </div>
+                  Contact Me
+                </NavLink>
+              </GlowButton>
+            </ButtonContainer>
+          </CTAContent>
+          
+          <ImageContainer isMobile={isMobile}>
+            <img
+              src={img1}
+              alt="Person Pointing"
+            />
+          </ImageContainer>
+        </CTASection>
       </div>
-      <br />
-    </>
+    </Container>
   );
 };
 
