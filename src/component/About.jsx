@@ -561,49 +561,7 @@ const About = () => {
                 >
                   Experience
                 </Typography>
-                <Box className="timeline">
-                  <Box className="timelineItem">
-                    <li
-                      className="year"
-                      style={{
-                        fontWeight: "bold",
-                        color: "#333",
-                        listStyle: "none",
-                        display: "flex",
-                        alignItems: "center",
-                        fontFamily:
-                          'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                      }}
-                    >
-                      📅 07/2024 - Present
-                    </li>
-                    <Typography
-                      variant="h3"
-                      sx={{
-                        fontSize: "17px",
-                        fontWeight: "bold",
-                        paddingTop: "5px",
-                        paddingBottom: "10px",
-                        marginBottom: "8px",
-                        color: "#333",
-                        fontFamily:
-                          'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                        textShadow: "2px 2px 4px rgba(17, 90, 179, 0.3)",
-                      }}
-                    >
-                      Tweaking World{" "}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "16px",
-                        mt: -1.25,
-                        fontFamily: "inherit",
-                      }}
-                    >
-                      Associate Software Developer, Pune, India.
-                    </Typography>
-                  </Box>
-                </Box>
+              
                 <Box className="timeline">
                   <Box className="timelineItem">
                     <li
@@ -698,95 +656,7 @@ const About = () => {
                     }}
                   />
                 </Box> */}
-                <Box id="ex-2">
-                  <Typography
-                    variant="h2"
-                    sx={{
-                      fontSize: isMobile ? "20px" : "23px",
-                      mb: 1,
-                      color: "#003366",
-                      fontWeight: "bold",
-                      fontFamily:
-                        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                      textShadow: "2px 2px 4px rgba(17, 90, 179, 0.3)",
-                    }}
-                  >
-                    Tweaking World{" "}
-                  </Typography>
-                  <hr
-                    style={{
-                      border: "1px solid #1d26419b",
-                      color: "#0033cc9b",
-                    }}
-                  />
-
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      my: 1,
-                      fontWeight: "bold",
-                      color: "#333",
-
-                      fontFamily:
-                        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                      textShadow: "2px 2px 4px rgba(17, 90, 179, 0.3)",
-                    }}
-                  >
-                    Associate Software Developer
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#555",
-                      my: 1,
-                      fontSize: isMobile ? "14px" : "18px",
-                      fontFamily:
-                        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                    }}
-                  >
-                    07/2024 - Present | Pune, India
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      color: "#555",
-                      my: 1,
-                      fontSize: isMobile ? "14px" : "16px",
-                      fontFamily:
-                        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                    }}
-                  >
-                    Gained hands-on experience in MERN stack, Next.js and Spring
-                    Boot with secure JWT-based authentication.
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      color: "#555",
-                      my: 1,
-                      fontSize: isMobile ? "14px" : "16px",
-                      fontFamily:
-                        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                    }}
-                  >
-                    Contributed to performance enhancement by optimizing RESTful
-                    APIs, reducing response time by 35%, and improving data flow
-                    efficiency.{" "}
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      color: "#555",
-                      my: 1,
-                      fontSize: isMobile ? "14px" : "16px",
-                      fontFamily:
-                        'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-                    }}
-                  >
-                    Participated in codebase restructuring and deployment
-                    strategies, resulting in 25% faster deployment times and
-                    smoother migration workflows
-                  </Typography>
-                </Box>
+           
                 <Box id="ex-2">
                   <Typography
                     variant="h2"
@@ -886,3 +756,4 @@ const About = () => {
 };
 
 export default About;
+
