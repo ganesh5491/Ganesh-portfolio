@@ -23,9 +23,11 @@ function App() {
         <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/Project" element={<Project />} />
-            <Route path="/Skills" element={<Skills />} />
             <Route path="/About" element={<About />} />
+            <Route path="/experience" element={<Experience />} />
+            <Route path="/Project" element={<Project />} />
+            <Route path="/ai-expertise" element={<AIExpertise />} />
+            <Route path="/Skills" element={<Skills />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/OnlineLearning" element={<OnlineLearning />} />
             <Route path="/ShopSphere" element={<ShopSphere />} />
