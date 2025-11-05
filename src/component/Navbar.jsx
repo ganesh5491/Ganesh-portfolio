@@ -108,7 +108,7 @@ const MobileMenuText = styled(ListItemText)`
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const location = useLocation();
 
   const handleDrawerOpen = () => {
@@ -121,53 +121,46 @@ const Navbar = () => {
 
   const navLinks = [
     { title: "Home", path: "/" },
-    { title: "About", path: "/about" },
-    { title: "Services", path: "/services" },
-    { title: "Projects", path: "/project" },
-    { title: "Contact", path: "/contact" },
+    { title: "About", path: "/About" },
+    { title: "Experience", path: "/experience" },
+    { title: "Projects", path: "/Project" },
+    { title: "AI Expertise", path: "/ai-expertise" },
+    { title: "Skills", path: "/Skills" },
+    { title: "Contact", path: "/Contact" },
   ];
 
   return (
-    <GlassAppBar position="fixed">
-      <Toolbar sx={{ position: 'relative', zIndex: 1 }}>
-        <LogoText variant="h5" sx={{ flexGrow: 1 }}>
-          <NavLink
-            to="/"
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-            }}
-          >
-            GANESH KALE
-          </NavLink>
-        </LogoText>
-        
-        {isMobile ? (
-          <>
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={handleDrawerOpen}
-              sx={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                '&:hover': {
-                  background: 'rgba(0, 255, 255, 0.2)',
-                  transform: 'scale(1.1)',
-                  boxShadow: '0 0 20px rgba(0, 255, 255, 0.4)',
-                }
+    <CleanAppBar position="fixed" component={motion.div} initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.5 }}>
+      <Toolbar>
+        <Box sx={{ flexGrow: 1 }}>
+          <LogoText variant="h6">
+            <NavLink
+              to="/"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
               }}
             >
+              Ganesh Kale
+            </NavLink>
+          </LogoText>
+        </Box>
+
+        {isMobile ? (
+          <>
+            <MobileMenuButton
+              edge="start"
+              aria-label="menu"
+              onClick={handleDrawerOpen}
+            >
               <MenuIcon />
-            </IconButton>
-            <GlassDrawer
+            </MobileMenuButton>
+            <CleanDrawer
               anchor="right"
               open={drawerOpen}
               onClose={handleDrawerClose}
             >
-              <List sx={{ paddingTop: '2rem', position: 'relative', zIndex: 1 }}>
+              <Box sx={{ paddingTop: '2rem' }}>
                 {navLinks.map((link) => (
                   <MobileMenuItem
                     button
@@ -175,34 +168,34 @@ const Navbar = () => {
                     component={NavLink}
                     to={link.path}
                     onClick={handleDrawerClose}
-                    className={location.pathname === link.path ? 'active' : ''}
+                    className={location.pathname.toLowerCase() === link.path.toLowerCase() ? 'active' : ''}
                   >
                     <MobileMenuText primary={link.title} />
                   </MobileMenuItem>
                 ))}
-              </List>
-            </GlassDrawer>
+              </Box>
+            </CleanDrawer>
           </>
         ) : (
-          <>
+          <Box sx={{ display: 'flex', gap: 1 }}>
             {navLinks.map((link) => (
               <NavLink
                 key={link.title}
                 to={link.path}
                 style={{ textDecoration: "none" }}
               >
-                <GlowButton
-                  className={location.pathname === link.path ? 'active' : ''}
-                  sx={{ mx: 0.5 }}
+                <NavButton
+                  className={location.pathname.toLowerCase() === link.path.toLowerCase() ? 'active' : ''}
+                  variant={location.pathname.toLowerCase() === link.path.toLowerCase() ? "contained" : "text"}
                 >
                   {link.title}
-                </GlowButton>
+                </NavButton>
               </NavLink>
             ))}
-          </>
+          </Box>
         )}
       </Toolbar>
-    </GlassAppBar>
+    </CleanAppBar>
   );
 };
 
