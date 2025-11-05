@@ -1,40 +1,210 @@
 import { motion } from "framer-motion";
 import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
-import img2 from "../assets/poster.jpg";
-import img1 from "../assets/office.jpeg";
 import img3 from "../assets/mee.jpg";
 import { LiaFileDownloadSolid } from "react-icons/lia";
 import pdf from "../assets/GaneshhResume.pdf";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
- const handleDownload = () => {
-   const link = document.createElement("a");
-   link.href = pdf;
-   link.download = "GANESHKALERESUME.pdf";
-   document.body.appendChild(link);
-   link.click();
-   document.body.removeChild(link);
- };
- const Button = styled.button`
-   background-color: rgba(16, 15, 16, 0.78);
-   color: white;
-   border: none;
-   padding: 7px 15px;
-   font-size: 1.2rem;
-   cursor: pointer;
-   transition: transform 0.3s ease, background-color 0.3s ease;
-   display: flex;
-   align-items: center;
-   gap: 10px;
+// Clean minimal styled components
+const Container = styled.div`
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%);
+  padding-top: 80px;
+`;
 
-   &:hover {
-     background-color: rgb(77, 8, 88);
-     transform: scale(1.1);
-   }
- `;
+const ContentWrapper = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+`;
+
+const AboutCard = styled.div`
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+  }
+`;
+
+const SectionTitle = styled.h1`
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #212529;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+const ProfileSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+`;
+
+const ProfileImage = styled.div`
+  flex-shrink: 0;
+
+  img {
+    border-radius: 16px;
+    border: 4px solid #ffffff;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+  }
+`;
+
+const ProfileContent = styled.div`
+  flex: 1;
+`;
+
+const NameTitle = styled.h2`
+  font-size: 2rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const BioText = styled.p`
+  font-size: 1.1rem;
+  color: #495057;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-family: 'Inter', sans-serif;
+`;
+
+const ContactInfo = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+`;
+
+const ContactItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const ContactLabel = styled.span`
+  font-weight: 600;
+  color: #212529;
+  font-family: 'Inter', sans-serif;
+`;
+
+const ContactValue = styled.span`
+  color: #6c757d;
+  font-family: 'Inter', sans-serif;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+`;
+
+const PrimaryButton = styled.button`
+  background: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+
+  &:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+  }
+`;
+
+const SecondaryButton = styled.button`
+  background: transparent;
+  color: #007bff;
+  border: 2px solid #007bff;
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  text-decoration: none;
+
+  &:hover {
+    background: #007bff;
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+`;
+
+const SkillsHighlight = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+`;
+
+const SkillTag = styled.span`
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+`;
+
+const handleDownload = () => {
+  const link = document.createElement("a");
+  link.href = pdf;
+  link.download = "GaneshKaleResume.pdf";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 const About = () => {
   const theme = useTheme();
