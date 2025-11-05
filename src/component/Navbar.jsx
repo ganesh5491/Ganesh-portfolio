@@ -16,6 +16,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import styled from "styled-components";
 
 // Clean minimal styled components
 const CleanAppBar = styled(AppBar)`
