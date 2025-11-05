@@ -145,7 +145,7 @@ const ProfileImage = styled.div`
 const handleDownload = () => {
   const link = document.createElement("a");
   link.href = pdf;
-  link.download = "GANESHKALERESUME.pdf";
+  link.download = "GaneshKaleResume.pdf";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -153,12 +153,12 @@ const handleDownload = () => {
 
 const Home = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Container>
       <Navbar />
-      
+
       <div
         style={{
           display: "flex",
@@ -167,103 +167,103 @@ const Home = () => {
           justifyContent: "center",
           minHeight: "100vh",
           padding: "2rem",
-          position: "relative",
-          zIndex: 1,
+          gap: isMobile ? "2rem" : "4rem",
+          maxWidth: "1200px",
+          margin: "0 auto",
         }}
       >
-        {isMobile && (
-          <ImageContainer style={{ marginBottom: "2rem" }}>
-            <img
-              src={img2}
-              alt="Ganesh"
-              style={{
-                height: "200px",
-                width: "200px",
-                objectFit: "cover",
-              }}
-            />
-          </ImageContainer>
+        {/* Left Content */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          style={{ flex: 1 }}
+        >
+          <ContentCard>
+            <HeroTitle>
+              Hi, I'm <HighlightText>Ganesh</HighlightText>
+            </HeroTitle>
+
+            <HeroSubtitle>
+              Full Stack Developer | React.js | Node.js | Spring Boot
+            </HeroSubtitle>
+
+            <HeroDescription>
+              Result-driven Full Stack Developer skilled in React.js, Node.js, Spring Boot, and MongoDB.
+              Experienced in developing and deploying scalable applications that improve user experience
+              and system efficiency. Passionate about clean code, problem-solving, and integrating AI tools
+              to accelerate development and automation.
+            </HeroDescription>
+
+            <ButtonGroup>
+              <PrimaryButton onClick={handleDownload}>
+                Download Resume
+                <LiaFileDownloadSolid style={{ fontSize: "1.25rem" }} />
+              </PrimaryButton>
+
+              <SocialLinks>
+                <SocialIcon
+                  href="https://github.com/ganesh5491"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaGithubSquare />
+                </SocialIcon>
+                <SocialIcon
+                  href="https://www.linkedin.com/in/ganesh-kale-70a50a248"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaLinkedin />
+                </SocialIcon>
+              </SocialLinks>
+            </ButtonGroup>
+          </ContentCard>
+        </motion.div>
+
+        {/* Right Profile Image */}
+        {!isMobile && (
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <ProfileImage>
+              <img
+                src={img2}
+                alt="Ganesh Kale"
+                style={{
+                  height: "400px",
+                  width: "400px",
+                  objectFit: "cover",
+                }}
+              />
+            </ProfileImage>
+          </motion.div>
         )}
 
-        <GlassCard style={{ maxWidth: "600px", marginRight: isMobile ? "0" : "2rem" }}>
-          <Parallax speed={-10}>
-            <div style={{ marginBottom: "2rem" }}>
-              <AnimatedTypography>
-                Hi, I am{" "}
-                <span style={{ 
-                  background: "linear-gradient(45deg, #ff00ff, #00ffff)",
-                  backgroundClip: "text",
-                  WebkitBackgroundClip: "text",
-                  color: "transparent"
-                }}>
-                  Ganesh...
-                </span>
-              </AnimatedTypography>
-            </div>
-          </Parallax>
-
-          <Parallax speed={-8}>
-            <GlowText>
-              Full Stack Java | React Developer
-            </GlowText>
-          </Parallax>
-
-          <Parallax speed={-6}>
-            <SubText>
-              I create stunning websites for your business, highly experienced
-              in web design and development with cutting-edge technologies.
-            </SubText>
-          </Parallax>
-
-          <Parallax speed={-4}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: isMobile ? "center" : "flex-start",
-                gap: "1.5rem",
-                flexWrap: "wrap",
-              }}
-            >
-              <GlowButton onClick={handleDownload}>
-                Download Resume
-                <LiaFileDownloadSolid style={{ fontSize: "1.5rem" }} />
-              </GlowButton>
-              
-              <div style={{ display: "flex", gap: "1rem" }}>
-                <IconWrapper>
-                  <NavLink target="_blank" to="https://github.com/ganesh5491">
-                    <FaGithubSquare />
-                  </NavLink>
-                </IconWrapper>
-                <IconWrapper>
-                  <NavLink
-                    target="_blank"
-                    to="https://www.linkedin.com/in/ganesh-kale-70a50a248"
-                  >
-                    <FaLinkedin />
-                  </NavLink>
-                </IconWrapper>
-              </div>
-            </div>
-          </Parallax>
-        </GlassCard>
-
-        {!isMobile && (
-          <ImageContainer>
-            <img
-              src={img2}
-              alt="Ganesh"
-              style={{
-                height: "340px",
-                width: "340px",
-                objectFit: "cover",
-              }}
-            />
-          </ImageContainer>
+        {/* Mobile Profile Image */}
+        {isMobile && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <ProfileImage>
+              <img
+                src={img2}
+                alt="Ganesh Kale"
+                style={{
+                  height: "250px",
+                  width: "250px",
+                  objectFit: "cover",
+                }}
+              />
+            </ProfileImage>
+          </motion.div>
         )}
       </div>
-      
+
       <Skills />
     </Container>
   );
