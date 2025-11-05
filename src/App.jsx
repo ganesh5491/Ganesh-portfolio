@@ -6,6 +6,8 @@ import Project from "./component/Project";
 import Skills from "./component/Skills";
 import About from "./component/About";
 import Contact from "./component/Contact";
+import Experience from "./component/Experience";
+import AIExpertise from "./component/AIExpertise";
 import ShopSphere from "./component/ShopSphere";
 import OnlineLearning from "./component/OnlineLearning"
 import NewsSentimentAnalysis from "./component/NewsSentimentAnalysis";
